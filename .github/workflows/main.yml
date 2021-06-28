@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: ⏳ Install Deeps
+        run: yarn install
+
+      - name: 🔎 Verify lint
+        run: yarn lint
+
+      - name: 🩺 Unity Test
+        run: yarn test
+
