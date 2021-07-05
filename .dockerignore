@@ -1,0 +1,13 @@
+tests
+.next
+coverage
+node_modules
+.editorconfig
+.git
+.gitignore
+jest.config.json
+jest.setup.tests
+README.md
+.eslintrc
+.nvmrc
+Dockerfile
