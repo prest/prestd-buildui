@@ -3,18 +3,18 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
-  url: "https://guidiego.github.io",
-  baseUrl: "/next-ts-mui/",
+  title: "Prest.Admin Docs",
+  tagline: "Prest.Admin are cool",
+  url: "https://prest.github.io",
+  baseUrl: "/prest.admin/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "guidiego", // Usually your GitHub org/user name.
-  projectName: "next-ts-mui", // Usually your repo name.
+  organizationName: "prest", // Usually your GitHub org/user name.
+  projectName: "prest.admin", // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: "My Site",
+      title: "Prest.Admin",
       logo: {
         alt: "My Site Logo",
         src: "img/logo.svg",
@@ -28,7 +28,7 @@ module.exports = {
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/guidiego/next-ts-mui",
+          href: "https://github.com/prest/prest.admin",
           label: "GitHub",
           position: "right",
         },
