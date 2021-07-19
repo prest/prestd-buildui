@@ -10,7 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: ⏳ Install Deeps
@@ -22,3 +21,20 @@ jobs:
       - name: 🩺 Unity Test
         run: yarn test
 
+  docs:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 🔨 Build Docs
+        run: |
+          cd docs
+          yarn install
+          yarn build
+
+      - name: 🚀 Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build
