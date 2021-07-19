@@ -1,0 +1,1 @@
+(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[535],{6353:function(e){"use strict";e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Welcome","permalink":"/prest.admin/blog/welcome"},{"title":"Hello","permalink":"/prest.admin/blog/hello-world"},{"title":"Hola","permalink":"/prest.admin/blog/hola"}]}')}}]);
