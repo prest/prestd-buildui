@@ -33,8 +33,8 @@ jobs:
           yarn install
           yarn build
 
-      - name: 🚀 Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          deploy_key: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/build
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./docs/build
