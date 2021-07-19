@@ -5,8 +5,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 module.exports = {
   title: "My Site",
   tagline: "Dinosaurs are cool",
-  url: "https://guidiego.github.io/next-ts-mui",
-  baseUrl: "/",
+  url: "https://guidiego.github.io",
+  baseUrl: "/next-ts-mui/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
