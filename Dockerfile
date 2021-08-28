@@ -8,8 +8,9 @@ ENV NODE_ENV "production"
 RUN yarn install --production=false \
     && yarn build
 
-RUN rm -rf node_modules \
-    && rm -rf src \
+RUN rm -rf /app/node_modules \
+    && rm -rf /app/src \
     && yarn install --production=true
 
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "-p", "3001"]
+EXPOSE 3001

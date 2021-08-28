@@ -3,5 +3,6 @@
     "\\.[jt]sx?$": "babel-jest"
   },
   "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
-  "testPathIgnorePatterns": ["<rootDir>/.next/", "<rootDir>/node_modules/"]
+  "testPathIgnorePatterns": ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  "coverageReporters": ["html"]
 }
