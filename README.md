@@ -21,3 +21,7 @@ docker-compose up
 docker pull prest/admin
 docker run -it -e PREST_URL=<your-prest-uri> -p 3001:3001 prest/admin
 ```
+
+## Issues
+
+> The [issue listing](https://github.com/prest/prest/issues?q=is%3Aissue+is%3Aopen+label%3Aproduct%2Fadmin) should be kept in the ["main" repository (_api server_)](https://github.com/prest/prest), centralizing all demands helps us give visibility to all products
