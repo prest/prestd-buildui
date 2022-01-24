@@ -1,13 +1,12 @@
-import React from "react";
-
-import Link from "next/link";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import { PRestTable } from "@postgresrest/node";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import React from "react";
 import Layout from "~/components/Layout";
 import prest from "~/lib/prest";
 
-import { GetServerSideProps } from "next";
-import { PRestTable } from "@postgresrest/node";
 
 export type Props = {
   tables: PRestTable[];
@@ -16,7 +15,7 @@ export type Props = {
 export const Home: React.FC<Props> = ({ tables = [] }) => (
   <Layout>
     <List>
-      {tables.map(({ name }) => (
+      {tables.length > 0 && tables.map(({ name }) => (
         <Link key={name} href={`/${name}`} passHref>
           <ListItem button component="a">
             {name}
