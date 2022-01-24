@@ -7,7 +7,6 @@ import React from "react";
 import Layout from "~/components/Layout";
 import prest from "~/lib/prest";
 
-
 export type Props = {
   tables: PRestTable[];
 };
@@ -15,13 +14,14 @@ export type Props = {
 export const Home: React.FC<Props> = ({ tables = [] }) => (
   <Layout>
     <List>
-      {tables.length > 0 && tables.map(({ name }) => (
-        <Link key={name} href={`/${name}`} passHref>
-          <ListItem button component="a">
-            {name}
-          </ListItem>
-        </Link>
-      ))}
+      {tables.length > 0 &&
+        tables.map(({ name }) => (
+          <Link key={name} href={`/${name}`} passHref>
+            <ListItem button component="a">
+              {name}
+            </ListItem>
+          </Link>
+        ))}
     </List>
   </Layout>
 );
