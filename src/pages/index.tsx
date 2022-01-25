@@ -14,14 +14,17 @@ export type Props = {
 export const Home: React.FC<Props> = ({ tables = [] }) => (
   <Layout>
     <List>
-      {tables.length > 0 &&
+      {tables.length > 0 ? (
         tables.map(({ name }) => (
           <Link key={name} href={`/${name}`} passHref>
             <ListItem button component="a">
               {name}
             </ListItem>
           </Link>
-        ))}
+        ))
+      ) : (
+        <ListItem> Do not found any Tables </ListItem>
+      )}
     </List>
   </Layout>
 );
