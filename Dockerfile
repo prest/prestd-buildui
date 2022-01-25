@@ -6,9 +6,8 @@ WORKDIR /app
 ENV NODE_ENV "production"
 
 RUN yarn install --production=false \
-    && yarn build
-
-RUN rm -rf /app/node_modules \
+    && yarn build && \
+    rm -rf /app/node_modules \
     && rm -rf /app/src \
     && yarn install --production=true
 
