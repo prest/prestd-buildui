@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 import Layout from "~/components/Layout";
-import prest from "~/lib/prest";
+import { getDatabaseScheme, prestAPI } from "~/lib/prest";
 
 export type Props = {
   tables: PRestTable[];
@@ -30,7 +30,7 @@ export const Home: React.FC<Props> = ({ tables = [] }) => (
 );
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const tables = await prest.tablesByDBInSchema("prest.public");
+  const tables = await prestAPI.tablesByDBInSchema(getDatabaseScheme);
   return { props: { tables } };
 };
 
