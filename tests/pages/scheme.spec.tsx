@@ -3,7 +3,11 @@ jest.mock("~/lib/prest");
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { prestAPI } from "~/lib/prest";
-import { getServerSideProps, Home, Props } from "~/pages";
+import {
+  getServerSideProps,
+  Props,
+  SchemePage,
+} from "~/pages/[database]/[scheme]";
 
 describe("components/Home", () => {
   it("should render component with props", () => {
@@ -12,13 +16,19 @@ describe("components/Home", () => {
     const listItemClass =
       "MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button";
 
-    render(<Home tables={[table1, table2]} />);
+    render(<SchemePage tables={[table1, table2]} />);
 
     const t1El = screen.getByText(table1.name);
     const t2El = screen.getByText(table2.name);
 
-    expect(t1El).toHaveProperty("href", `http://localhost/${table1.name}`);
-    expect(t2El).toHaveProperty("href", `http://localhost/${table2.name}`);
+    expect(t1El).toHaveProperty(
+      "href",
+      `http://localhost/prest/public/${table1.name}`
+    );
+    expect(t2El).toHaveProperty(
+      "href",
+      `http://localhost/prest/public/${table2.name}`
+    );
     expect(t1El).toHaveClass(listItemClass);
     expect(t2El).toHaveClass(listItemClass);
   });
