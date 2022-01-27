@@ -1,14 +1,12 @@
-import React from "react";
-
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
+  withStyles,
+  WithStyles
 } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import React from "react";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -42,7 +40,7 @@ export const Layout: React.FC<WithStyles<typeof styles>> = ({
 }) => (
   <>
     <AppBar>
-      <Toolbar>PRest Admin</Toolbar>
+      <Toolbar>Build UI - prestd</Toolbar>
     </AppBar>
     <div className={classes.root}>{children}</div>
   </>
