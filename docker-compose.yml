@@ -16,7 +16,7 @@ services:
       retries: 3
   prestd:
     # use latest build - analyze the risk of using this version in production
-    image: prest/prest
+    image: ghcr.io/prest/prest:beta
     links:
       - "postgres:postgres"
     environment:
@@ -42,6 +42,8 @@ services:
       - "prestd:prestd"
     environment:
       - PREST_URL=http://prestd:3000
+      - PREST_DATABASE=prest
+      - PREST_SCHEME=public
     depends_on:
       postgres:
         condition: service_healthy
