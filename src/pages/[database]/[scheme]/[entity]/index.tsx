@@ -9,13 +9,12 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
-import { getDatabaseScheme, prestAPI } from "~/lib/prest";
+import { prestAPI } from "~/lib/prest";
 
 export type Props = {
   items: AnyObject[];
   structure: PRestTableShowItem[];
-  entity: string;
-  databaseScheme: string;
+  fullTableName: string;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -60,8 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export const EntityPage: React.FC<Props> = ({
   items,
   structure,
-  entity,
-  databaseScheme,
+  fullTableName,
 }) => {
   const [selectionModel, setSelectionModel] = useState([]);
   const classes = useStyles();
@@ -77,7 +75,7 @@ export const EntityPage: React.FC<Props> = ({
   const deleteRows = async () => {
     const query = new PRestQuery();
     await prestAPI
-      .tableConnection(`${databaseScheme}.${entity}`)
+      .tableConnection(`${fullTableName}`)
       .delete(query.in("id", selectionModel));
   };
 
@@ -106,7 +104,7 @@ export const EntityPage: React.FC<Props> = ({
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => router.push(`/${entity}/edit`)}
+          onClick={() => router.push(`${router.asPath}/edit`)}
         >
           <AddIcon />
         </Fab>
@@ -116,15 +114,15 @@ export const EntityPage: React.FC<Props> = ({
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
+  const fullTableName = `${ctx.params.database}.${ctx.params.scheme}.${ctx.params.entity}`;
   const props = {
-    entity: ctx.params.entity as string,
+    fullTableName: fullTableName,
     items: [],
     structure: [],
-    databaseScheme: getDatabaseScheme,
   };
   const [entityGet, structureGet] = await Promise.allSettled([
-    prestAPI.tablesByDBInSchema(`${getDatabaseScheme}.${ctx.params.entity}`),
-    prestAPI.show(`${getDatabaseScheme}.${ctx.params.entity}`),
+    prestAPI.tablesByDBInSchema(fullTableName),
+    prestAPI.show(fullTableName),
   ]);
 
   if (entityGet.status === "fulfilled" && structureGet.status === "fulfilled") {
