@@ -7,7 +7,7 @@ import { prestAPI } from "~/lib/prest";
 import {
   EntityPage,
   getServerSideProps,
-  Props,
+  Props
 } from "~/pages/[database]/[scheme]/[entity]";
 
 describe("components/EntityPage", () => {
@@ -61,7 +61,7 @@ describe("components/EntityPage", () => {
     };
 
     const fullTableName = `${fakeCtx.params.database}.${fakeCtx.params.scheme}.${fakeCtx.params.entity}`;
-    expect(props).toHaveProperty("fullTableName", fakeCtx.params.entity);
+    expect(props).toHaveProperty("fullTableName", fullTableName);
     expect(props).toHaveProperty("structure", fakeStructure);
     expect(props).toHaveProperty("items", fakeTables);
   });
