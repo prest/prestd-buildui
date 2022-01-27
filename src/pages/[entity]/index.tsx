@@ -1,24 +1,21 @@
-import React, { useState } from "react";
-
+import { Badge } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
+import { makeStyles } from "@material-ui/core/styles";
+import { DataGrid, GridColDef } from "@material-ui/data-grid";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Delete";
-
-import Layout from "~/components/Layout";
-import prest from "~/lib/prest";
-
-import { useRouter } from "next/router";
+import { PRestQuery, PRestTableShowItem } from "@postgresrest/node";
 import { GetServerSideProps } from "next";
-import { PRestTableShowItem } from "@postgresrest/node";
-import { DataGrid, GridColDef } from "@material-ui/data-grid";
-import { makeStyles } from "@material-ui/core/styles";
-import { PRestQuery } from "@postgresrest/node";
-import { Badge } from "@material-ui/core";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Layout from "~/components/Layout";
+import { getDatabaseScheme, prestAPI } from "~/lib/prest";
 
 export type Props = {
   items: AnyObject[];
   structure: PRestTableShowItem[];
   entity: string;
+  databaseScheme: string;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +57,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const EntityPage: React.FC<Props> = ({ items, structure, entity }) => {
+export const EntityPage: React.FC<Props> = ({
+  items,
+  structure,
+  entity,
+  databaseScheme,
+}) => {
   const [selectionModel, setSelectionModel] = useState([]);
   const classes = useStyles();
   const router = useRouter();
@@ -74,8 +76,8 @@ export const EntityPage: React.FC<Props> = ({ items, structure, entity }) => {
 
   const deleteRows = async () => {
     const query = new PRestQuery();
-    await prest
-      .tableConnection(`prest.public.${entity}`)
+    await prestAPI
+      .tableConnection(`${databaseScheme}.${entity}`)
       .delete(query.in("id", selectionModel));
   };
 
@@ -94,7 +96,7 @@ export const EntityPage: React.FC<Props> = ({ items, structure, entity }) => {
         />
       </div>
       <div className={classes.fab}>
-        {selectionModel.length === 0 ? null : (
+        {selectionModel?.length === 0 ? null : (
           <Badge color="error" badgeContent={selectionModel.length}>
             <Fab color="secondary" aria-label="remove" onClick={deleteRows}>
               <RemoveIcon />
@@ -118,10 +120,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     entity: ctx.params.entity as string,
     items: [],
     structure: [],
+    databaseScheme: getDatabaseScheme,
   };
   const [entityGet, structureGet] = await Promise.allSettled([
-    prest.tablesByDBInSchema(`prest.public.${ctx.params.entity}`),
-    prest.show(`prest.public.${ctx.params.entity}`),
+    prestAPI.tablesByDBInSchema(`${getDatabaseScheme}.${ctx.params.entity}`),
+    prestAPI.show(`${getDatabaseScheme}.${ctx.params.entity}`),
   ]);
 
   if (entityGet.status === "fulfilled" && structureGet.status === "fulfilled") {
