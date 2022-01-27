@@ -1,22 +1,26 @@
-import React, { useState } from "react";
-
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Layout from "~/components/Layout";
-import prest from "~/lib/prest";
-
-import { PRestTableShowItem, PRestQuery } from "@postgresrest/node";
-import { useRouter } from "next/router";
+import { PRestQuery, PRestTableShowItem } from "@postgresrest/node";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Layout from "~/components/Layout";
+import { getDatabaseScheme, prestAPI } from "~/lib/prest";
 
 export type Props = {
   structures: PRestTableShowItem[];
   data: AnyObject;
   entity: string;
+  databaseScheme: string;
 };
 
-export const Home: React.FC<Props> = ({ structures, data, entity }) => {
+export const Home: React.FC<Props> = ({
+  structures,
+  data,
+  entity,
+  databaseScheme,
+}) => {
   const router = useRouter();
   const [form, setForm] = useState(
     structures.reduce(
@@ -29,9 +33,10 @@ export const Home: React.FC<Props> = ({ structures, data, entity }) => {
   );
 
   const onClick = async () => {
+    console.log("asjjdasjhd", databaseScheme);
     try {
       const query = new PRestQuery();
-      const table = prest.tableConnection(`prest.public.${entity}`);
+      const table = prestAPI.tableConnection(`${databaseScheme}.${entity}`);
 
       if (!data.id) {
         await table.create(form);
@@ -84,15 +89,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     entity: ctx.params.entity as string,
     data: {},
     structures: [],
+    databaseScheme: getDatabaseScheme,
   };
 
-  const promises = [prest.show(`prest.public.${ctx.params.entity}`)];
+  const promises = [prestAPI.show(`${getDatabaseScheme}.${ctx.params.entity}`)];
 
   if (id[0]) {
     const query = new PRestQuery();
     promises.push(
-      prest
-        .tableConnection(`prest.public.${ctx.params.entity}`)
+      prestAPI
+        .tableConnection(`${getDatabaseScheme}.${ctx.params.entity}`)
         .query(query.eq("id", id))
     );
   }
