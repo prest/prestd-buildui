@@ -1,10 +1,9 @@
 jest.mock("~/lib/prest");
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
-
-import prest from "~/lib/prest";
-import { Home, getServerSideProps, Props } from "~/pages";
+import React from "react";
+import { prestAPI } from "~/lib/prest";
+import { getServerSideProps, Home, Props } from "~/pages";
 
 describe("components/Home", () => {
   it("should render component with props", () => {
@@ -26,7 +25,7 @@ describe("components/Home", () => {
 
   it("should exec correctly getServerSideProps", async () => {
     const fakeTables = "fakeTables";
-    (prest.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
+    (prestAPI.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
 
     const { props } = (await getServerSideProps({} as Any)) as { props: Props };
     expect(props).toHaveProperty("tables", fakeTables);

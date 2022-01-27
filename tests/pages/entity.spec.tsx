@@ -1,10 +1,9 @@
 jest.mock("~/lib/prest");
 
-import React from "react";
-import { render, screen } from "@testing-library/react";
 import { PRestTableShowItem } from "@postgresrest/node";
-
-import prest from "~/lib/prest";
+import { render, screen } from "@testing-library/react";
+import React from "react";
+import { prestAPI } from "~/lib/prest";
 import { EntityPage, getServerSideProps, Props } from "~/pages/[entity]";
 
 describe("components/EntityPage", () => {
@@ -20,7 +19,16 @@ describe("components/EntityPage", () => {
       { id: 2, col1: "fizz" },
     ];
 
-    render(<EntityPage entity={entity} structure={stucture} items={items} />);
+    const databaseScheme = "prest.public";
+
+    render(
+      <EntityPage
+        entity={entity}
+        structure={stucture}
+        items={items}
+        databaseScheme={databaseScheme}
+      />
+    );
 
     items.forEach(({ col1, id }) => {
       expect(screen.getByText(id)).toHaveClass(
@@ -36,8 +44,8 @@ describe("components/EntityPage", () => {
     const fakeTables = "fakeTables";
     const fakeStructure = "fakeStructure";
     const fakeCtx = { params: { entity: "foobar" } };
-    (prest.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
-    (prest.show as jest.Mock).mockResolvedValue(fakeStructure);
+    (prestAPI.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
+    (prestAPI.show as jest.Mock).mockResolvedValue(fakeStructure);
 
     const { props } = (await getServerSideProps(fakeCtx as Any)) as {
       props: Props;
