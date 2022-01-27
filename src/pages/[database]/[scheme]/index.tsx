@@ -22,7 +22,11 @@ export const SchemePage: React.FC<Props> = ({ tables = [] }) => {
       <List>
         {tables.length > 0 ? (
           tables.map(({ name }) => (
-            <Link key={name} href={`${router.asPath}/${name}`} passHref>
+            <Link
+              key={name}
+              href={`${router?.asPath ? router.asPath : ""}/${name}`}
+              passHref
+            >
               <ListItem button component="a">
                 <FontAwesomeIcon icon="table" /> {name}
               </ListItem>
@@ -37,7 +41,7 @@ export const SchemePage: React.FC<Props> = ({ tables = [] }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const fullSchemeName = `${ctx.params.database}.${ctx.params.scheme}`;
+  const fullSchemeName = `${ctx.params?.database}.${ctx.params?.scheme}`;
   const tables = await prestAPI.tablesByDBInSchema(fullSchemeName);
   return { props: { tables } };
 };

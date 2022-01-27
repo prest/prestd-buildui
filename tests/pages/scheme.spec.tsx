@@ -6,10 +6,10 @@ import { prestAPI } from "~/lib/prest";
 import {
   getServerSideProps,
   Props,
-  SchemePage,
+  SchemePage
 } from "~/pages/[database]/[scheme]";
 
-describe("components/Home", () => {
+describe("components/scheme", () => {
   it("should render component with props", () => {
     const table1 = { name: "table1" };
     const table2 = { name: "table2" };
@@ -19,17 +19,11 @@ describe("components/Home", () => {
     render(<SchemePage tables={[table1, table2]} />);
 
     const t1El = screen.getByText(table1.name);
-    const t2El = screen.getByText(table2.name);
-
-    expect(t1El).toHaveProperty(
-      "href",
-      `http://localhost/prest/public/${table1.name}`
-    );
-    expect(t2El).toHaveProperty(
-      "href",
-      `http://localhost/prest/public/${table2.name}`
-    );
+    expect(t1El).toHaveProperty("href", `http://localhost/${table1.name}`);
     expect(t1El).toHaveClass(listItemClass);
+
+    const t2El = screen.getByText(table2.name);
+    expect(t2El).toHaveProperty("href", `http://localhost/${table2.name}`);
     expect(t2El).toHaveClass(listItemClass);
   });
 
