@@ -20,16 +20,8 @@ to install the libraries on your node:
 
 ```sh
 yarn install
-PREST_URL=<your-prest-uri> \
-   PREST_DATABASE=<your-database> \
-   PREST_SCHEME=<your-scheme> \
-   yarn dev -p 3001
+PREST_URL=<your-prest-uri> yarn dev -p 3001
 ```
-
-**environment variables:**
-- `PREST_URL`: the url of the prestd server, e.g. `http://127.0.0.1:3000`
-- `PREST_DATABASE`: the database name, e.g. `prest`
-- `PREST_SCHEME`: the database scheme, e.g. `public`
 
 > `<your-prest-uri>`: if you ran **prestd** via docker the url will be `http://127.0.0.1:3000`
 
