@@ -3,7 +3,7 @@ import {
   createStyles,
   Theme,
   withStyles,
-  WithStyles
+  WithStyles,
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Link from "next/link";
