@@ -6,20 +6,20 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
-import { getDatabaseScheme, prestAPI } from "~/lib/prest";
+import { prestAPI } from "~/lib/prest";
 
 export type Props = {
   structures: PRestTableShowItem[];
   data: AnyObject;
-  entity: string;
-  databaseScheme: string;
+  fullTableName: string;
+  tableURL: string;
 };
 
 export const Home: React.FC<Props> = ({
   structures,
   data,
-  entity,
-  databaseScheme,
+  fullTableName,
+  tableURL,
 }) => {
   const router = useRouter();
   const [form, setForm] = useState(
@@ -33,10 +33,9 @@ export const Home: React.FC<Props> = ({
   );
 
   const onClick = async () => {
-    console.log("asjjdasjhd", databaseScheme);
     try {
       const query = new PRestQuery();
-      const table = prestAPI.tableConnection(`${databaseScheme}.${entity}`);
+      const table = prestAPI.tableConnection(`${fullTableName}`);
 
       if (!data.id) {
         await table.create(form);
@@ -45,7 +44,7 @@ export const Home: React.FC<Props> = ({
         await table.update(query.eq("id", id), formWithoutID);
       }
 
-      router.push(`/${entity}`);
+      router.push(`${tableURL}`);
     } catch (e) {
       console.log(e);
     }
@@ -84,25 +83,23 @@ export const Home: React.FC<Props> = ({
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
-  const { id = [] } = ctx.params;
+  const fullTableName = `${ctx.params.database}.${ctx.params.scheme}.${ctx.params.entity}`;
+  const tableURL = `/${ctx.params.database}/${ctx.params.scheme}/${ctx.params.entity}`;
+  const { id = ctx.params.id } = [];
   const props = {
-    entity: ctx.params.entity as string,
     data: {},
     structures: [],
-    databaseScheme: getDatabaseScheme,
+    fullTableName: fullTableName,
+    tableURL: tableURL,
   };
 
-  const promises = [prestAPI.show(`${getDatabaseScheme}.${ctx.params.entity}`)];
-
-  if (id[0]) {
+  const promises = [prestAPI.show(`${fullTableName}`)];
+  if (id?.length > 0) {
     const query = new PRestQuery();
     promises.push(
-      prestAPI
-        .tableConnection(`${getDatabaseScheme}.${ctx.params.entity}`)
-        .query(query.eq("id", id))
+      prestAPI.tableConnection(`${fullTableName}`).query(query.eq("id", id))
     );
   }
-
   const [structureGet, dataGet] = await Promise.allSettled(promises);
 
   if (structureGet.status === "fulfilled") {
