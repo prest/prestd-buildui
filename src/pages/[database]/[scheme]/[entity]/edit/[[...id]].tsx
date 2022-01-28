@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 
 export type Props = {
   structures: PRestTableShowItem[];
@@ -35,7 +35,7 @@ export const Home: React.FC<Props> = ({
   const onClick = async () => {
     try {
       const query = new PRestQuery();
-      const table = prestAPI.tableConnection(`${fullTableName}`);
+      const table = prest.tableConnection(`${fullTableName}`);
 
       if (!data.id) {
         await table.create(form);
@@ -93,11 +93,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     tableURL: tableURL,
   };
 
-  const promises = [prestAPI.show(`${fullTableName}`)];
+  const promises = [prest.show(`${fullTableName}`)];
   if (id?.length > 0) {
     const query = new PRestQuery();
     promises.push(
-      prestAPI.tableConnection(`${fullTableName}`).query(query.eq("id", id))
+      prest.tableConnection(`${fullTableName}`).query(query.eq("id", id))
     );
   }
   const [structureGet, dataGet] = await Promise.allSettled(promises);

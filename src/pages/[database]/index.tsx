@@ -8,7 +8,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 import Layout from "~/components/Layout";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 
 export type Props = {
   database: string;
@@ -44,7 +44,7 @@ export const DataDasePage: React.FC<Props> = ({ database, schemes }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   const props = {
     database: ctx.params.database as string,
-    schemes: await prestAPI.schemas(),
+    schemes: await prest.schemas(),
   };
 
   return { props };
