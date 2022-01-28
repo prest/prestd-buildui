@@ -9,7 +9,9 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error", {"endOfLine": "auto"}
+    ],
     "indent": 0,
     "comma-dangle": ["error", "always-multiline"]
   },
