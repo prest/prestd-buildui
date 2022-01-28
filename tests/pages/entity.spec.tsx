@@ -3,7 +3,7 @@ jest.mock("~/lib/prest");
 import { PRestTableShowItem } from "@postgresrest/node";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 import {
   EntityPage,
   getServerSideProps,
@@ -53,8 +53,8 @@ describe("components/EntityPage", () => {
         entity: "foobar",
       },
     };
-    (prestAPI.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
-    (prestAPI.show as jest.Mock).mockResolvedValue(fakeStructure);
+    (prest.tablesByDBInSchema as jest.Mock).mockResolvedValue(fakeTables);
+    (prest.show as jest.Mock).mockResolvedValue(fakeStructure);
 
     const { props } = (await getServerSideProps(fakeCtx as Any)) as {
       props: Props;
