@@ -3,10 +3,12 @@ import {
   createStyles,
   Theme,
   withStyles,
-  WithStyles,
+  WithStyles
 } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
+import Link from "next/link";
 import React from "react";
+import styled from "styled-components";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -34,13 +36,21 @@ const styles = (theme: Theme) =>
     },
   });
 
+const WhiteLink = styled.a`
+  color: white;
+`;
+
 export const Layout: React.FC<WithStyles<typeof styles>> = ({
   children,
   classes,
 }) => (
   <>
     <AppBar>
-      <Toolbar>Build UI - prestd</Toolbar>
+      <Toolbar>
+        <Link key="home" href="/" passHref>
+          <WhiteLink>Build UI - prestd</WhiteLink>
+        </Link>
+      </Toolbar>
     </AppBar>
     <div className={classes.root}>{children}</div>
   </>
