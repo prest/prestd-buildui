@@ -8,7 +8,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import React from "react";
 import Layout from "~/components/Layout";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 
 export type Props = {
   dbs: PRestDatabase[];
@@ -34,7 +34,7 @@ export const Databases: React.FC<Props> = ({ dbs = [] }) => (
 );
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const dbs = await prestAPI.databases();
+  const dbs = await prest.databases();
   return { props: { dbs } };
 };
 

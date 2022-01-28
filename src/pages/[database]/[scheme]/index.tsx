@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import Layout from "~/components/Layout";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 
 export type Props = {
   tables: PRestTable[];
@@ -42,7 +42,7 @@ export const SchemePage: React.FC<Props> = ({ tables = [] }) => {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
   const fullSchemeName = `${ctx.params?.database}.${ctx.params?.scheme}`;
-  const tables = await prestAPI.tablesByDBInSchema(fullSchemeName);
+  const tables = await prest.tablesByDBInSchema(fullSchemeName);
   return { props: { tables } };
 };
 

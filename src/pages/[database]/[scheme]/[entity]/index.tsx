@@ -9,7 +9,7 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Layout from "~/components/Layout";
-import { prestAPI } from "~/lib/prest";
+import prest from "~/lib/prest";
 
 export type Props = {
   items: AnyObject[];
@@ -74,7 +74,7 @@ export const EntityPage: React.FC<Props> = ({
 
   const deleteRows = async () => {
     const query = new PRestQuery();
-    await prestAPI
+    await prest
       .tableConnection(`${fullTableName}`)
       .delete(query.in("id", selectionModel));
   };
@@ -121,8 +121,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     structure: [],
   };
   const [entityGet, structureGet] = await Promise.allSettled([
-    prestAPI.tablesByDBInSchema(fullTableName),
-    prestAPI.show(fullTableName),
+    prest.tablesByDBInSchema(fullTableName),
+    prest.show(fullTableName),
   ]);
 
   if (entityGet.status === "fulfilled" && structureGet.status === "fulfilled") {
