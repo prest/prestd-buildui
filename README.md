@@ -4,19 +4,19 @@ Build UI, is **"Django Admin"** _like_ created in React to support prestd intera
 
 ### How use it
 
-We use (and recommend) **node version 14**, to avoid messing up your environment it is recommended to use a name version control, e.g. `nvm`:
+We use (and recommend) **node version 14**, to avoid messing up your environment it is recommended to use a name version control, e.g. [`nvm`](https://github.com/nvm-sh/nvm):
 
 ```sh
 nvm install $(cat .nvmrc) # or nvm use $(cat .nvmrc)
 ```
 
-`buildui` depends on some services (postgresql and prestd server), to simplify the creation of your environment we recommend to use docker compose (contained here in the repository):
+`buildui` depends on some services (postgresql and prestd server), to simplify the creation of your environment we recommend to use **docker**, to make it even easier we wrote a _[docker compose](https://docs.docker.com/compose/)_ (contained here in the repository):
 
 ```sh
 docker-compose up -d postgres prestd
 ```
 
-To install the libraries on your node (we use `yarn`):
+To install the libraries on your node (we use [`yarn`](https://yarnpkg.com/)):
 
 ```sh
 yarn install
