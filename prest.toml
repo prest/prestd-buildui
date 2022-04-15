@@ -1,8 +1,12 @@
 [auth]
+enabled = false
 table = "prest_users"
 username = "username"
 password = "password"
 metadata = ["first_name", "last_name", "last_login"]
+
+[jwt]
+default = false
 
 [http]
 port = 3000
@@ -11,5 +15,5 @@ port = 3000
 enabled = false
 
 [cors]
-alloworigin = ["http://127.0.0.1", "http://127.0.0.1:3000"]
+alloworigin = ["http://127.0.0.1", "http://127.0.0.1:3000", "http://127.0.0.1:3001"]
 allowheaders = ["GET", "DELETE", "POST", "PUT", "PATCH", "OPTIONS"]

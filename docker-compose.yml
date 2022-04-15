@@ -4,6 +4,7 @@ services:
     image: postgres
     volumes:
       - "./data/postgres:/var/lib/postgresql/data"
+      - "./etc/postgres:/docker-entrypoint-initdb.d"
     environment:
       - POSTGRES_USER=prest
       - POSTGRES_DB=prest
@@ -36,16 +37,16 @@ services:
     ports:
       - "3000:3000"
 
-  admin:
-    build: .
-    links:
-      - "prestd:prestd"
-    environment:
-      - PREST_URL=http://prestd:3000
-      - PREST_DATABASE=prest
-      - PREST_SCHEME=public
-    depends_on:
-      postgres:
-        condition: service_healthy
-    ports:
-      - "3001:3001"
+  # buildui:
+  #   build: .
+  #   links:
+  #     - "prestd:prestd"
+  #   environment:
+  #     - PREST_URL=http://prestd:3000
+  #     - PREST_DATABASE=prest
+  #     - PREST_SCHEME=public
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   ports:
+  #     - "3001:3001"

@@ -4,22 +4,28 @@ Build UI, is **"Django Admin"** _like_ created in React to support prestd intera
 
 ### How use it
 
-We use (and recommend) node version 14, to avoid messing up your environment it is recommended to use a name version control, e.g. `nvm`:
+We use (and recommend) **node version 14**, to avoid messing up your environment it is recommended to use a name version control, e.g. `nvm`:
 
 ```sh
 nvm install $(cat .nvmrc) # or nvm use $(cat .nvmrc)
 ```
 
-buildui depends on some services (postgresql and prestd server), to simplify the creation of your environment we recommend to use docker compose (contained here in the repository):
+`buildui` depends on some services (postgresql and prestd server), to simplify the creation of your environment we recommend to use docker compose (contained here in the repository):
 
 ```sh
 docker-compose up -d postgres prestd
 ```
 
-to install the libraries on your node:
+To install the libraries on your node (we use `yarn`):
 
 ```sh
 yarn install
+yarn dev -p 3001 # the default next port (3000) we use in prestd
+```
+
+If you want to set the prestd address use the `PREST_URL` environment variable:
+
+```sh
 PREST_URL=<your-prest-uri> yarn dev -p 3001
 ```
 
@@ -27,17 +33,13 @@ PREST_URL=<your-prest-uri> yarn dev -p 3001
 
 ### How use Docker
 
-Using via docker compose (contains postgres, prestd server and admin in non-production build version):
-
-```sh
-docker-compose up
-```
+> buildui is under development, we have not yet made a docker image available
 
 **soon docker image:**
 
 ```sh
-docker pull prest/admin
-docker run -it -e PREST_URL=<your-prest-uri> -p 3001:3001 prest/admin
+docker pull ghcr.io/prest/buildui
+docker run -it -e PREST_URL=<your-prest-uri> -p 3001:3001 ghcr.io/prest/buildui
 ```
 
 ## Issues
